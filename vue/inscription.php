@@ -4,6 +4,7 @@
 		<meta charset="UTF-8">
 		<title>Inscription - Pictionary</title>
 
+		<link rel="icon" href="image/logo.ico" />
 		<link rel="stylesheet" type="text/css" href="css/style.css">
 	</head>
 	<body onload="setTimeout(cacherNotification,5000);">
@@ -35,7 +36,7 @@
 
 		<header>
 			<h2 id="logo">
-				<img width="100" height="100" src="image/crayon.png" alt="Pictionary logo" />
+				<img width="100" height="100" src="image/logo.png" alt="Pictionary logo" />
 			</h2>
 		</header>
 		<div>
@@ -74,15 +75,15 @@
 						<label for="tel">Tel* _______________________________</label>
 					</li>
 					<li>
-						<input type="date" name="birthdate" id="birthdate" placeholder="JJ/MM/AAAA" value="<?php if (isset($_GET["erreur"])) { echo $date; } ?>" onchange="compteAge()" onkeyup="activeSubmit()" onfocusout="validateAge()" required/>
+						<input type="date" name="birthdate" id="birthdate" placeholder="JJ/MM/AAAA" pattern="[0-9]{2}\/[0-9]{2}\/[0-9]{4}" title="Ex: JJ/MM/AAAA" value="<?php if (isset($_GET["erreur"])) { echo $date; } ?>" onchange="compteAge()" onkeyup="activeSubmit()" onfocusout="validateAge()" required/>
 						<input type="number" name="age" id="age" placeholder="Age" value="<?php if (isset($_GET["erreur"])) { echo $age; } ?>" readonly/>
-						<label for="birthdate">Date de naissance* _______</label>
+						<label for="birthdate">Date de naissance* ________</label>
 						<!-- à quoi sert l'attribut disabled ? Empêcher la saisie -->
 					</li>
 					<li>						
 						<input type="password" name="password" id="mdp1" pattern="[a-zA-Z0-9\s]{6}" maxlength="8" title="Le mot de passe doit être de 6 à 8 caractères alphanumériques !" placeholder="6 à 8 caractères" onkeyup="validateMdp2();activeSubmit();" required/>
 						<label for="mdp1">Mot de passe* ______________________</label>
-						<!-- Pattern alphanumériques avec les espaces compris (/s) -->
+						<!-- Pattern alphanumériques avec les espaces compris (\s) -->
 						<!-- quels sont les deux scénarios où l'attribut title sera affiché ? Ici que si le mot de passe et plus petit -->
 						<!-- encore une fois, quelle est la différence entre name et id pour un input ? -->
 					</li>

@@ -36,8 +36,8 @@ function creerImage($letexte) {
 	$texte = imagecolorallocate($img, 255, 255, 255);
 
 	// Chemin vers notre fichier de police ttf
-	$font = "/var/www/WEB/Pictionnary/vue/font/DejaVuSans.ttf";
-	$fichier = "/var/www/WEB/Pictionnary/data/".$date."_".$lettre.".png";
+	$font = "/var/www/Pictionary/vue/font/DejaVuSans.ttf";
+	$fichier = "/var/www/Pictionary/data/".$date."_".$lettre.".png";
 
 	$largeur = imagesx($img);
 	$hauteur = imagesy($img);
@@ -72,7 +72,7 @@ function creerImage($letexte) {
 
 function supprimerImage() {
 
-	$dossier = "/var/www/WEB/Pictionnary/data";
+	$dossier = "/var/www/Pictionary/data";
 	$repertoire = opendir($dossier);
 
 	// Lecture de chaque fichier du répertoire

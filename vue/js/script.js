@@ -18,14 +18,23 @@ compteAge = function(e) {
 		var date = Date.parse(document.getElementById("birthdate").valueAsDate);
 		var birthDate = new Date(date);
 		var dateNow = new Date(Date.now());
+		// Convertie la saisie
+		var date = document.getElementById("birthdate").value;
+		var datebis = Date.parse(date);
+
+		// Initialise date saisie et la date d'aujourdhui
+		var birthDate = new Date(datebis);
+		var dateNow = new Date(Date.now());
 
 		if (birthDate.getTime()>dateNow.getTime()) {
 			console.log("La date de naissance doit être supérieure à la date du jour !");
 		} else {
 
-			document.getElementById('birthdate').setCustomValidity("");
-			console.log("La date de naissance est OK !");
-
+			var jour = date.substr(0, 2);
+			var moisbis = date.substr(3,3);
+			var mois = moisbis.replace("/","");
+			var annee = date.substr(6, 10);
+			var age = dateNow.getFullYear() - annee;
 			var age = dateNow.getFullYear() - birthDate.getFullYear();
 
 			// Si la date d'anniversaire n'est pas encore passée, on corrige l'age
@@ -35,9 +44,8 @@ compteAge = function(e) {
 
 			document.getElementById('age').value = age;
 		}
-
 	} catch(e) {
-		document.getElementById('age').value = "";
+		console.log("Erreur !");
 	}
 }
 
@@ -158,15 +166,21 @@ cacherNotification = function (e) {
 
 // Désactive le bouton submit tant que les input requis sont vide
 activeSubmit = function (e) {
+	// Pour tous les éléments dans la balise <form></form>
 	var f = document.forms["inscription"].elements;
+	// J'initialise à true le faite que le bouton est désactiver
 	var cansubmit = true;
 
+	// Pour i de 0 à nombre(d'éléments)-10
+	// Ici 19 éléments
 	for (var i = 0; i < f.length-10; i++) {
+		// Si les 9 premiers éléments sont différent de 0 on met active l'input
 		if (f[i].value.length == 0 ) cansubmit = false;
 	}
 	console.log(f[i].value.length);
 	console.log(cansubmit);
 
+	// Si true input désactiver
 	if (cansubmit == true) {
 		document.getElementById('validForm').disabled = !cansubmit;
 	} else {

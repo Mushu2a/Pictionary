@@ -8,7 +8,8 @@
 	</head>
 	<body>
 		<div id="contenu">
-			<div id="text">PICTI<span>ONARY</span></div>
+			<div id="text">PICTI<span>ONARY</span></div><br><br>
+			<h2>Bonjour, bienvenue, vous êtes ici dans l'application permettant de dessiner et partager vos oeuvres :)</h2>
 			<center>
 				<a id="bouton" href="vue/connexion.php">Connexion</a>
 				<a id="bouton" href="vue/inscription.php">Inscription</a>

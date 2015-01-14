@@ -72,32 +72,30 @@ if (isset($_POST) && isset($_POST["validForm"])) {
 				print_r($err);
 			} else {
 
-				// ici démarrer une session
-				session_start();
-
-				$sql = $dbh->query("SELECT `user`.`id`, `user`.`email`, `user`.`nom`, `user`.`prenom`, `user`.`couleur`, `user`.`profilepic` FROM `users` AS user WHERE `user`.`email`= '".$email."'");
+				$requete = "SELECT `user`.`id`, `user`.`email`, `user`.`nom`, `user`.`prenom`, `user`.`tel`, `user`.`birthdate`, `user`.`couleur`, `user`.`profilepic` FROM `users` AS user WHERE `user`.`email`= '".$email."'";
+				$sql = $dbh->query($requete);
 				if ($sql->fetchColumn() < 1) {
 					header("Location: ../inscription.php?erreur=".urlencode("un problème est survenu"));
 				}
 				else {
 
+					// ici démarrer une session
+					session_start();
+
 					try {
 
-						$stmt = $dbh->query("SELECT `user`.`id`, `user`.`email`, `user`.`nom`, `user`.`prenom`, `user`.`couleur`, `user`.`profilepic` FROM `users` AS user WHERE `user`.`email`= '".$email."'");
-						$stmt->execute();
-						while ($data = $stmt->fetch(PDO::FETCH_ASSOC)) {
-							echo $data["nom"];
-							echo "<img src='".$data["profilepic"]."'>";;
-						}
-
+						$sql = $dbh->query($requete);
 						// on récupère la ligne qui nous intéresse avec $sql->fetch(),
-						/*while ($data = $sql->fetch(PDO::FETCH_ASSOC)) {
-							echo $data["email"] = $_SESSION["email"];
-							echo $data["nom"] = $_SESSION["nom"];
-							echo $data["prenom"] = $_SESSION["prenom"];
-							echo $data["couleur"] = $_SESSION["couleur"];
-							echo $data["profilepic"] = $_SESSION["profilepic"];
-						}*/
+						while ($data = $sql->fetch(PDO::FETCH_ASSOC)) {
+							$_SESSION["email"] = $data["email"];
+							$_SESSION["password"] = $password;
+							$_SESSION["nom"] = $data["nom"];
+							$_SESSION["prenom"] = $data["prenom"];
+							$_SESSION["tel"] = $data["tel"];
+							$_SESSION["birthdate"] = $data["birthdate"];
+							$_SESSION["couleur"] = "#".$data["couleur"];
+							$_SESSION["profilepic"] = $data["profilepic"];
+						}
 
 					}
 					catch(Exception $e) {
@@ -105,8 +103,8 @@ if (isset($_POST) && isset($_POST["validForm"])) {
 					}
 				}
 
-				// ici,  rediriger vers la page main.php*/
-				//header("Location: ../main.php");
+				// ici,  rediriger vers la page main.php
+				header("Location: ../main.php");
 			}
 			$dbh = null;
 		}

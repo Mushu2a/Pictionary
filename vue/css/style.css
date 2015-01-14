@@ -188,7 +188,7 @@ input[type="submit"] {
 	width: 100%;
 	margin-bottom: 50px;
 }
-/****/
+/**####**/
 
 /**## Positionner à droite de l'écran ##**/
 #menudroite {
@@ -202,6 +202,22 @@ input[type="submit"] {
 #bloc_droite {
 	width: 100%;
 	margin-bottom: 10px;
+}
+/**####**/
+
+/*## Centrer au millieu ##*/
+#menucentrer {
+	position: absolute;
+	margin-top: 50px;
+	width: 55%;
+	height: auto;
+	float: left;
+	left: 450px;
+}
+
+#bloc_centrer {
+	width: 100%;
+	margin-bottom: 50px;
 }
 /**####**/
 
@@ -230,7 +246,7 @@ input[type="submit"] {
 }
 
 #contenu {
-	height: 101%;
+	height: 89.5%;
 	background: -webkit-gradient(linear, left top, left bottom, from(#D65EA2), to(transparent)), linear-gradient(90deg, #a3d371, transparent), linear-gradient(-90deg, #ff7f50, transparent);
 	background: -webkit-linear-gradient(#32cd32, transparent), -webkit-linear-gradient(0deg, #87ceeb, transparent), -webkit-linear-gradient(180deg, #D65EA2, transparent);
 	background: linear-gradient(#32cd32, transparent), linear-gradient(90deg, #87ceeb, transparent), linear-gradient(-90deg, #ff7f50, transparent);
@@ -244,7 +260,7 @@ input[type="submit"] {
 
 #contenu #bouton {
 	font-size: 14px;
-	margin: 20% 15px 0 0;
+	margin: 10% 15px 0 0;
 }
 
 #bouton {
@@ -280,6 +296,17 @@ input[type="submit"] {
 }
 
 /*########*/
+
+#connexionLogo {
+	position: fixed;
+	top: 10px;
+	right: 20px;
+	width: 90px; 
+	height: 90px;
+	z-index: 20;
+	border: 5px solid rgba(0,0,0,.5);
+	border-radius: 100%;
+}
 
 
 #logo {
