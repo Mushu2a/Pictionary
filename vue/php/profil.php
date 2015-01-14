@@ -9,16 +9,18 @@ require_once '../php/config.php';
 		<meta charset="UTF-8">
 		<title>Accueil - Pictionary</title>
 
+		<link rel="icon" href="image/logo.ico"/>
 		<link rel="stylesheet" type="text/css" href="../css/style.css">
 	</head>
 	<body>
 		<header>
 			<h2 id="logo">
-				<img width="100" height="100" src="../image/crayon.png" alt="Pictionary logo" />
+				<img width="100" height="100" src="../image/logo.png" alt="Pictionary logo" />
 			</h2>
 		</header>
 		<div>
 			<ul id="lien">
+				<li><a href="../main.php"><b>►</b> Accueil</a></li>
 				<li><a href="profil.php"><b>►</b> Profil</a></li>
 				<li><a href="../../?deconnexion" ><b>◄</b> Déconnexion</a></li>
 			</ul>

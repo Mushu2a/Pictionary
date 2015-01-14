@@ -42,15 +42,13 @@
 	function ui() {
 		FB.ui( {
 				method: 'feed',
-				name: 'The Facebook SDK for Javascript',
-				caption: 'Bringing Facebook to the desktop and mobile web',
+				name: 'Pictionnary',
+				caption: 'Je partage mon image que vous devez deviner',
 				description: (
-					'A small JavaScript library that allows you to harness ' +
-					'the power of Facebook, bringing the user\'s identity, ' +
-					'social graph and distribution power to your site.'
+					"Le but du jeu c'est de deviner le dessin créer et partager."
 				),
-				link: 'https://developers.facebook.com/docs/reference/javascript/',
-				picture: 'http://www.fbrell.com/public/f8.jpg'
+				link: 'http://134.59.143.147/WEB/PictionaryV2/',
+				picture: 'https://lastennetloic.fr/images/logo.png'
 			}, function(response) {
 				if (response && response.post_id) {
 					alert('Post publier !');

@@ -9,7 +9,7 @@ require_once 'php/config.php';
 		<meta charset="UTF-8">
 		<title>Accueil - Pictionary</title>
 
-		<link rel="icon" href="image/logo.ico" />
+		<link rel="icon" href="image/logo.ico"/>
 		<link rel="stylesheet" type="text/css" href="css/style.css">
 	</head>
 	<body>
@@ -20,6 +20,7 @@ require_once 'php/config.php';
 		</header>
 		<div>
 			<ul id="lien">
+				<li><a href="main.php"><b>►</b> Accueil</a></li>
 				<li><a href="php/profil.php"><b>►</b> Profil</a></li>
 				<li><a href="?deconnexion" ><b>◄</b> Déconnexion</a></li>
 			</ul>
@@ -27,6 +28,11 @@ require_once 'php/config.php';
 		<?php if (isset($_SESSION["email"]) && isset($_SESSION["password"])) { ?>
 			<h1>Bonjour et bienvenue, <?php echo "<br><br>".ucfirst($_SESSION["nom"])." ".ucfirst($_SESSION["prenom"]); ?></h1>
 			<img src="<?php echo $_SESSION['profilepic']; ?>" id="connexionLogo">
+			<div id="menugauche">
+				<div id="bloc_gauche">
+					<div><?php require_once 'paint.php'; ?></div>
+				</div>
+			</div>
 		<?php } else {
 			header("Location: ../index.php");
 		} ?>

@@ -4,7 +4,7 @@
 		<meta charset="UTF-8">
 		<title>Inscription - Pictionary</title>
 
-		<link rel="icon" href="image/logo.ico" />
+		<link rel="icon" href="image/logo.ico"/>
 		<link rel="stylesheet" type="text/css" href="css/style.css">
 	</head>
 	<body onload="setTimeout(cacherNotification,5000);">
