@@ -18,7 +18,7 @@ if (isset($_POST) && isset($_POST["login_form"])) {
 				$sql = $dbh->query($requete);
 				$sql->execute();
 				while ($data = $sql->fetch(PDO::FETCH_ASSOC)) {
-
+					$_SESSION["id"] = $data["id"];
 					$_SESSION["email"] = $data["email"];
 					$_SESSION["password"] = $password;
 					$_SESSION["nom"] = $data["nom"];

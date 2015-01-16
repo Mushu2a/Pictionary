@@ -4,6 +4,7 @@
 		<meta charset="UTF-8">
 		<title>Bienvenue - Pictionary</title>
 
+		<link rel="icon" href="vue/image/logo.ico"/>
 		<link rel="stylesheet" type="text/css" href="vue/css/style.css">
 	</head>
 	<body>

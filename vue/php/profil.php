@@ -12,7 +12,12 @@ require_once '../php/config.php';
 		<link rel="icon" href="image/logo.ico"/>
 		<link rel="stylesheet" type="text/css" href="../css/style.css">
 	</head>
-	<body>
+	<body onload="setTimeout(cacherNotification,5000);">
+		<?php
+			if (isset($_GET["erreur"])) {
+				?> <span id="notification">ERREUR MODIFICATION -> <small>La modification à échourer, un champ n'est pas bon</small> <a href="#" id="close" onclick="cacherNotification(); return false;">X</a></span> <?php
+			}
+		?>
 		<header>
 			<h2 id="logo">
 				<img width="100" height="100" src="../image/logo.png" alt="Pictionary logo" />
@@ -27,9 +32,10 @@ require_once '../php/config.php';
 		</div>
 		<?php if (isset($_SESSION["email"]) && isset($_SESSION["password"])) { ?>
 			<h1>Modification du profil</h1>
-			<form action="php/req_profil.php" method="POST" name="inscription" id="inscription">
+			<form action="req_profil.php" method="POST" name="inscription" id="inscription">
 				<div id="menugauche">
 					<div id="bloc_gauche">
+						<input type="hidden" name="id" value="<?php echo $_SESSION["id"]; ?>">
 						<li>
 							<input type="email" name="email" id="email" pattern="[a-zA-Z0-9À-ŷ.!#$%&’*+/=?^_`{|}~-]+\@[a-zA-Z0-9]{4,}\.[a-zA-Z0-9]{2,4}" placeholder="Email" value="<?php echo $_SESSION["email"]; ?>" autofocus/>
 							<label for="email">E-mail</label>
@@ -57,16 +63,16 @@ require_once '../php/config.php';
 				<div id="menudroite">
 					<div id="bloc_droite">
 						<li>
-							<input type="date" name="birthdate" id="birthdate" placeholder="JJ/MM/AAAA" value="<?php echo $_SESSION["birthdate"]; ?>" pattern="[0-9]{2}\/[0-9]{2}\/[0-9]{4}" title="Ex: JJ/MM/AAAA" onchange="compteAge()" onfocusout="validateAge()"/>
-							<input type="number" name="age" id="age" placeholder="Age" readonly/>
+							<input type="date" name="birthdate" id="birthdate" placeholder="JJ/MM/AAAA" pattern="[0-9]{2}\/[0-9]{2}\/[0-9]{4}" title="Ex: JJ/MM/AAAA" onchange="compteAge()" onfocusout="validateAge()"/>
+							<input type="number" name="age" id="age" placeholder="Age" title="La date de naissance doit être renseigner" required/>
 							<label for="birthdate">Date de naissance</label>
 						</li>
 						<li>						
-							<input type="password" name="password" id="mdp1" pattern="[a-zA-Z0-9\s]{6}" maxlength="8" title="Le mot de passe doit être de 6 à 8 caractères alphanumériques !" placeholder="6 à 8 caractères" value="<?php echo $_SESSION["password"]; ?>" onkeyup="validateMdp2()"/>
+							<input type="password" name="mdp1" id="mdp1" pattern="[a-zA-Z0-9\s]{6}" maxlength="8" title="Le mot de passe doit être de 6 à 8 caractères alphanumériques !" placeholder="6 à 8 caractères" value="<?php echo $_SESSION["password"]; ?>" onkeyup="validateMdp2()" required/>
 							<label for="mdp1">Mot de passe</label>
 						</li>
 						<li>						
-							<input type="password" id="mdp2" maxlength="8" placeholder="Confirmation" value="<?php echo $_SESSION["password"]; ?>" onkeyup="validateMdp2()"/>
+							<input type="password" id="mdp2" maxlength="8" placeholder="Confirmation" value="<?php echo $_SESSION["password"]; ?>" onkeyup="validateMdp2()" required/>
 							<label for="mdp2">Confirmez mot de passe</label>
 						<li>
 						<li>

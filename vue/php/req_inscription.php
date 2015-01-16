@@ -87,6 +87,7 @@ if (isset($_POST) && isset($_POST["validForm"])) {
 						$sql = $dbh->query($requete);
 						// on récupère la ligne qui nous intéresse avec $sql->fetch(),
 						while ($data = $sql->fetch(PDO::FETCH_ASSOC)) {
+							$_SESSION["id"] = $data["id"];
 							$_SESSION["email"] = $data["email"];
 							$_SESSION["password"] = $password;
 							$_SESSION["nom"] = $data["nom"];

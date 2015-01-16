@@ -15,9 +15,9 @@ validateMdp2 = function(e) {
 compteAge = function(e) {
 	try{
 		// Date choisie par l'utilisateur
-		var date = Date.parse(document.getElementById("birthdate").valueAsDate);
-		var birthDate = new Date(date);
-		var dateNow = new Date(Date.now());
+		//var date = Date.parse(document.getElementById("birthdate");
+		var birthDate = new Date(document.getElementById("birthdate").value);
+		var dateNow = new Date();
 		// Convertie la saisie
 		var date = document.getElementById("birthdate").value;
 		var datebis = Date.parse(date);
@@ -35,6 +35,7 @@ compteAge = function(e) {
 			var mois = moisbis.replace("/","");
 			var annee = date.substr(6, 10);
 			var age = dateNow.getFullYear() - annee;
+
 			var age = dateNow.getFullYear() - birthDate.getFullYear();
 
 			// Si la date d'anniversaire n'est pas encore passée, on corrige l'age

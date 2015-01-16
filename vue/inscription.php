@@ -81,7 +81,7 @@
 						<!-- à quoi sert l'attribut disabled ? Empêcher la saisie -->
 					</li>
 					<li>						
-						<input type="password" name="password" id="mdp1" pattern="[a-zA-Z0-9\s]{6}" maxlength="8" title="Le mot de passe doit être de 6 à 8 caractères alphanumériques !" placeholder="6 à 8 caractères" onkeyup="validateMdp2();activeSubmit();" required/>
+						<input type="password" name="password" id="mdp1" pattern="[a-zA-Z0-9\s]{6,8}" maxlength="8" title="Le mot de passe doit être de 6 à 8 caractères alphanumériques !" placeholder="6 à 8 caractères" onkeyup="validateMdp2();activeSubmit();" required/>
 						<label for="mdp1">Mot de passe* ______________________</label>
 						<!-- Pattern alphanumériques avec les espaces compris (\s) -->
 						<!-- quels sont les deux scénarios où l'attribut title sera affiché ? Ici que si le mot de passe et plus petit -->

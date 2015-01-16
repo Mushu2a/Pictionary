@@ -7,10 +7,15 @@
 		<link rel="icon" href="image/logo.ico"/>
 		<link rel="stylesheet" type="text/css" href="css/style.css">
 	</head>
-	<body onload="setTimeout(cacherNotification,5000);">
+	<body>
 		<?php
+			// Si présence de l'erreur affichage notification
 			if (isset($_GET["erreur"])) {
-				?> <span id="notification">ERREUR CONNEXION -> <small>email/mot de passe incorrect</small> <a href="#" id="close" onclick="cacherNotification(); return false;">X</a></span> <?php
+				?> <span id="notification">ERREUR CONNEXION -> <small>email/mot de passe incorrect</small></span> <?php
+			}
+
+			if (isset($_GET["modifier"])) {
+				?> <span id="notification3">MODIFICATION REUSSI -> <small>Votre profil à changer, reconnecter vous</small></span> <?php
 			}
 		?>
 		<header>
@@ -34,7 +39,7 @@
 						<label for="email">Identifiant</label>
 					</li>
 					<li>
-						<input type="password" name="password" id="mdp1" pattern="[a-zA-Z0-9\s]{6}" maxlength="8" title="Le mot de passe doit être de 6 à 8 caractères alphanumériques !" placeholder="6 à 8 caractères" required/>
+						<input type="password" name="password" id="mdp1" pattern="[a-zA-Z0-9\s]{6,8}" maxlength="8" title="Le mot de passe doit être de 6 à 8 caractères alphanumériques !" placeholder="6 à 8 caractères" required/>
 						<label for="mdp1">Mot de passe</label>
 					</li>
 				</div>
@@ -46,6 +51,5 @@
 		<footer>
 			<p>créé par <a href="http://lastennetloic.fr" target="_blank">Lastennet Loïc</a></p>
 		</footer>
-		<script type="text/javascript" src="js/script.js"></script>
 	</body>
 </html>
