@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le: Ven 16 Janvier 2015 à 15:01
+-- Généré le: Lun 12 Janvier 2015 à 09:36
 -- Version du serveur: 5.5.40-0ubuntu0.14.04.1
 -- Version de PHP: 5.5.9-1ubuntu4.5
 
@@ -19,20 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Base de données: `tpWeb`
 --
-
--- --------------------------------------------------------
-
---
--- Structure de la table `drawings`
---
-
-CREATE TABLE IF NOT EXISTS `drawings` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `idUser` int(11) NOT NULL,
-  `commande` text NOT NULL,
-  `dessin` longblob NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
