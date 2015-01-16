@@ -1,4 +1,50 @@
+<script>
+	window.fbAsyncInit = function() {
+		FB.init({
+			appId: '735030746591821',
+			status: true,
+			cookie: true,
+			xfbml: true
+		});
+	};
+
+	// Démarre le SDK asynchrone
+	(function(d){
+		var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+		if (d.getElementById(id)) {return;}
+		js = d.createElement('script'); js.id = id; js.async = true;
+		js.src = "//connect.facebook.net/fr_FR/all.js";
+		ref.parentNode.insertBefore(js, ref);
+	}(document));
+
+	var image = document.getElementById(picture);
+
+	// Post un message sur le mur
+	function ui() {
+		FB.ui( {
+				method: "feed",
+				name: "Pictionnary",
+				caption: "Je partage mon image avec vous, essayé de deviner ce que c'est",
+				description: (
+					"Le but du jeu c'est de deviner le dessin créer et partager."
+				),
+				link: "http://134.59.143.147/WEB/PictionaryV3/",
+				picture: image
+			}, function(response) {
+				if (response && response.post_id) {
+					alert('Publier !');
+				} else {
+					alert('Non publier !');
+				}
+		});
+	}
+
+	var status = FB.getLoginStatus();
+
+	console.log(status);
+</script>
 <canvas id="canvas" width="800" height="500"></canvas>
+<button id="deconnexion" onclick="ui()">UI</button>
 
 <form action="php/req_paint.php" method="POST" name="tools">
 	<input type="hidden" name="id" value="<?php echo $_SESSION["id"]; ?>">
