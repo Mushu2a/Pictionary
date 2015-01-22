@@ -74,13 +74,22 @@ $(document).ready(function() {
 
 	document.getElementById('restart').onclick = function() {
 		context.clearRect(0,0, canvas.width(), canvas.height());
-		document.getElementById('size').value = "56";
+		document.getElementById('size').value = "40";
 		drawingCommandsId == [];
 	};
 
 	document.getElementById('enregistrer').onclick = function() {
+		document.getElementById('validate').disabled = false;
+		document.getElementById('partage').style.display = "block";
+
+		/* Création de l'image et ouverture d'un onglet la contenant */
 		var canvasData = document.getElementById("canvas");
-		window.open(canvasData.toDataURL("image/png"));
+		var image = canvasData.toDataURL("image/png");
+
+		document.getElementById('picture').value = "";
+		document.getElementById('picture').value = image;
+		//console.log(image);
+
+		window.open(image);
 	};
-	
 });

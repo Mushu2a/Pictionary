@@ -44,6 +44,21 @@ label[for="couleur"] {
 	left: 132px;
 }
 
+#partage {
+	display: none;
+	position: relative;
+	left: 100px;
+	width: 140px;
+	padding: 10px 0;
+	background: #47639E;
+	border-radius: 3px;
+	color: white;
+	border: none;
+	cursor: pointer;
+	font-weight: bold;
+	box-shadow: 0 6px 6px -6px black;
+}
+
 input {
 	position: relative;
 	left: 100px;
@@ -56,8 +71,12 @@ input {
 	box-shadow: 0 6px 6px -6px black;
 }
 
+input[type="button"] {
+	cursor: pointer;
+}
+
 input[type="submit"] {
-	font-weight: bold;  
+	font-weight: bold;
 	background-color: #3e87ec;
 	color: white;
 	border: 0px solid #3079ed;
