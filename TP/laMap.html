@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style type="text/css">
+        html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
+    </style>
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDua8nWpcP0Ndil0Vzf-VsEirOOkqw3WPE">
+    </script>
+    <script type="text/javascript">
+        var map;
+        var marker = new google.maps.Marker(null);
+        var gResults;
+
+
+
+
+        function initialize() {
+
+            var mapOptions = {
+                zoom: 2,
+                center: {lat: 43.616436, lng: 7.072109}
+
+            };
+
+            map = new google.maps.Map(document.getElementById('map-canvas'),
+                mapOptions);
+
+
+            // Create a <script> tag and set the USGS URL as the source.
+            var script = document.createElement('script');
+
+            script.src = 'http://earthquake.usgs.gov/earthquakes/feed/geojsonp/2.5/month';
+            document.getElementsByTagName('head')[0].appendChild(script);
+
+
+            //retirer setStyle et mettre un marker à parcourir
+            /*
+             map.data.setStyle(function(feature) {
+             var magnitude = feature.getProperty('mag');
+
+             return {
+             icon: getCircle(magnitude),
+             map: map,
+             title: 'test'
+             };
+             });
+             */
+
+
+
+
+
+
+
+
+
+        }
+
+/*
+        function setMarkers(results) {
+            // Add markers to the map
+
+            // Marker sizes are expressed as a Size of X,Y
+            // where the origin of the image (0,0) is located
+            // in the top left of the image.
+            //if(gResults != undefined){
+                for (var i = 0; i < results.features.length; i++) {
+                    var site = results.features[i].properties.place;
+                    var latLng = new google.maps.LatLng(results.features[i].geometry.coordinates[0],results.features[i].geometry.coordinates[1]);
+                    marker = new google.maps.Marker({
+                        position: latLng,
+                        icon: getCircle(results.features[i].properties.mag),
+                        title: site
+                    });
+                }
+            //}
+
+        }*/
+
+
+        /*
+        function getLatLng(feature){
+            var latLng = feature.getProperty('coordinates');
+            return latLng;
+        }*/
+/*
+        function getPlaces(feature){
+            var places = feature.getProperty('place');
+                return places;
+        }*/
+        /*
+        function getMagnitude(feature){
+            var magnitude = results.feature[0];
+            return magnitude;
+        }
+        */
+        /*
+        function getCircle(magnitude) {
+           var circle = {
+                path: google.maps.SymbolPath.CIRCLE,
+                fillColor: 'red',
+                fillOpacity: .2,
+                scale: Math.pow(2, magnitude) / 2,
+                strokeColor: 'white',
+                strokeWeight: .5
+            };
+            return circle;
+        }
+        */
+
+        function eqfeed_callback(results) {
+            //var myLatlng = new google.maps.LatLng(-25.363882,131.044922);
+            //var circleData = [];
+            for (var i = 0; i < results.features.length; i++) {
+                var coords = results.features[i].geometry.coordinates;
+                var latLng = new google.maps.LatLng(coords[1], coords[0]);
+                var magnitude = results.features[i].properties.mag;
+                var circle2 = {
+                    //data: circleData,
+                    path: google.maps.SymbolPath.CIRCLE,
+                    fillColor: 'red',
+                    fillOpacity: .2,
+                    scale: Math.pow(2, results.features[i].properties.mag) / 2,
+                    strokeColor: 'white',
+                    strokeWeight: .5
+                };
+                marker = new google.maps.Marker({
+                    position: latLng,
+                    icon: circle2,
+                    map: map,
+                    title: 'test'
+                });
+                var infowindow = new google.maps.InfoWindow({
+                    content: 'test456'
+                });
+                google.maps.event.addListener(marker, 'click', function(){
+                    infowindow.open(map,marker);
+                });
+
+                /*
+                var weightedLoc = {
+                    location: latLng,
+                    weight: Math.pow(2, magnitude)
+                };
+                */
+
+                //circleData.push(weightedLoc);
+            }
+
+
+
+
+
+
+        }
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+
+
+
+
+
+    </script>
+</head>
+<body>
+<div id="map-canvas"></div>
+</body>
+</html>
