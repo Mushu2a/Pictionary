@@ -1,38 +1,36 @@
-
-
-
 <!doctype html>
 <html>
 <head>
 <title>Search</title>
 </head>
 <body>
-  <div id="buttons">
-  <label> <input id="query" value='chat' type="text"/><button id="search-button"  onclick="keyWordsearch()">Search</button></label>
-  </div>
-  <div id="video"></div>
-  </div>
+<div id="buttons">
+<label> <input id="query" value='chat' type="text"/><button id="search-button"  onclick="keyWordsearch()">Search</button></label>
+</div>
+<div id="video"></div>
+</div>
 
-  <script>
-    function keyWordsearch(){
-            gapi.client.setApiKey('AIzaSyCsIk9f457XjxFNvO9YTOWGBjrJ81gun-k');
-            gapi.client.load('youtube', 'v3', function() {
-                    makeRequest();
-            });
-    }
-    function makeRequest() {
-            var q = document.getElementById('query').value;
-            var request = gapi.client.youtube.search.list({
-                       q: q,
-                    part: 'snippet'                        
-            });
-            request.execute(function(response) {
-                    var str = JSON.stringify(response.result);
-                    console.log(str);
-                    document.getElementById('video').innerHTML = '<pre>' + str + '</pre>';
-                    //$('#search-container').html('<pre>' + str + '</pre>');
-            });
-    }
- </script>
- <script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
+<script>
+  function keyWordsearch(){
+    gapi.client.setApiKey('AIzaSyCZP5OvW0UjUkT_zSvMG8-zMGDvaDGb2AQ');
+    gapi.client.load('youtube', 'v3', function() {
+      makeRequest();
+    });
+  }
+
+  function makeRequest() {
+    var query = document.getElementById('query').value;
+    var request = gapi.client.youtube.search.list({
+      q: query,
+      part: 'snippet'
+    });
+
+    request.execute(function(response) {
+      var str = JSON.stringify(response.result);
+      console.log(str);
+      document.getElementById('video').innerHTML = '<pre>' + str + '</pre>';
+    });
+  }
+</script>
+<script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
 </body>
