@@ -24,7 +24,7 @@
 		function initialize() {
 			var mapOptions = {
 				zoom: 3,
-				center: { lat: 42.0575795, lng: 8.919779},
+				center: { lat: 42.06344027695692, lng: 8.931884765625},
 				mapTypeId: google.maps.MapTypeId.TERRAIN
 			};
 
@@ -59,23 +59,6 @@
 			});
 		}
 
-		function getCircle(magnitude) {
-			var circle = {
-				path: google.maps.SymbolPath.CIRCLE,
-				fillColor: 'red',
-				fillOpacity: .2,
-				scale: Math.pow(2, magnitude) / 2,
-				strokeColor: 'white',
-				strokeWeight: .5
-			};
-
-			return circle;
-		}
-
-		function eqfeed_callback(results) {
-			map.data.addGeoJson(results);
-		}
-
 		// Fonction qui est appeller lors du click pour placer un marqueur
 		function placerMarker(location) {
 			if(marker){ // Si le marqueur existe
@@ -86,6 +69,41 @@
 					position : location, // Ajout de sa nouvelle position
 					map : map // Dans la map
 				});
+			}
+		}
+
+		function eqfeed_callback(results) {
+			for (var i = 0; i < results.features.length; i++) {
+
+				var place = results.features[i].properties.place;
+				var coords = results.features[i].geometry.coordinates;
+				var latLng = new google.maps.LatLng(coords[1], coords[0]);
+				var magnitude = results.features[i].properties.mag;
+
+				var circle2 = {
+					path: google.maps.SymbolPath.CIRCLE,
+					fillColor: 'red',
+					fillOpacity: .2,
+					scale: Math.pow(2, magnitude) / 2,
+					strokeColor: 'white',
+					strokeWeight: .5
+				};
+
+				var infowindow = new google.maps.InfoWindow();
+				var marker = new google.maps.Marker({
+					position: latLng,
+					icon: circle2,
+					title: 'Magnitude : '+place,
+					map: map
+				});
+
+				google.maps.event.addListener(marker, 'click', (function(marker, i) {
+					return function() {
+						console.log(results.features[i].properties.place);
+						infowindow.setContent(results.features[i].properties.place);
+						infowindow.open(map, marker);
+					}
+				})(marker, i));
 			}
 		}
 

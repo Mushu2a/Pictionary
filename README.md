@@ -3,7 +3,7 @@ Pictionnary Asynchrone est une application similaire à l'application Draw Somet
 
 Créer un dossier 'data' ou autre pour enregistrer les images temporaires
 
-Le dossier TP contient tous les tests réussi lors du TP facebook, création Mashup
+Le dossier TP contient tous les tests réussi lors du TP facebook, création Mashup, application tremblements de Terre
 
 Editer les variable ci-dessous dans le fichier "/vue/php/img_profil.php" pour que la création automatique de l'image puisse fonctionner dans votre environnement.
 
