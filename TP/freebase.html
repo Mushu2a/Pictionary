@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+    <style type="text/css">
+      #profil div {
+        float: left;
+        margin-left: 50px;
+        margin-right: 40px;
+        height: 50px;
+        width: 150px;
+        background: white;
+        text-align: center;
+        cursor: pointer;
+        line-height: 50px;
+        box-shadow: 2px 2px 10px 2px gray;
+      }
+    </style>
+</head>
+<body>
+<script>
+  var service_url = 'https://www.googleapis.com/freebase/v1/search';
+  var params = {
+    'query': 'France',
+    'filter': '(any type:/people/person)',
+    'limit': 10,
+    'indent': true
+  };
+  $.getJSON(service_url + '?callback=?', params, function(response) {
+    $.each(response.result, function(i, result) {
+      $('<div>', {text:result['name']}).appendTo(document.getElementById('profil'));
+
+      var topic_id = result['id'];
+      var service_url = 'https://www.googleapis.com/freebase/v1/topic';
+      var params = {
+        'lang': 'fr'
+      };
+      $.getJSON(service_url + topic_id + '?callback=?', params, function(topic) {
+        $('<span>',{text:topic.property['/common/topic/description'].values[0].value}).appendTo(document.getElementById('profil'));
+      });
+    });
+  });
+</script>
+<div id="profil">
+</div>
+<div id="test"></div>
+</body>
+</html>

@@ -1,90 +1,253 @@
 <!DOCTYPE html>
 <html>
 <head>
-<style type="text/css">
-	html, body, #map { height: 95%; margin: 0; padding: 0;}
-	footer {
-		height: auto;
-		text-align: center;
-		background: #2d313f;
-	}
-	footer h1 {
-		color: #fff;
-		font-size: 20px;
-		font-size: 12px;
-	}
-</style>
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDg12jSAFbzmePpigl6gJAT6hDxR4EC7F0"></script>
-<script type="text/javascript">
-	var map;
+	<meta charset="UTF-8">
+	<title>Earthquake</title>
+	<link rel="shortcut icon" type="image/png" href="icon.png">
+	<link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+	<style type="text/css">
+		html, body, #map {
+			height: 80%;
+			width: 100%;
+			margin: 0;
+			padding: 0;
+			background: #757575;
+			font-family:Lato, Arial;
+		}
+		footer {
+			color: #fff;
+			text-align: center;
+		}
+		footer h1 {
+			font-size: 30px;
+		}
 
-	function initialize() {
+		#video {
+			overflow: hidden;
+			overflow-x: auto;
+			overflow-y: hidden;
+			overflow : -moz-scrollbars-horizontal;
+		}
 
-		var mapOptions = {
-			zoom: 3,
-			center: { lat: 42.0575795, lng: 8.919779},
-			mapTypeId: google.maps.MapTypeId.TERRAIN
-		};
+		#ytplayer {
+			margin-left: 50px;
+		}
 
-		map = new google.maps.Map(document.getElementById('map'), mapOptions);
+		#personne div {
+			float: left;
+			margin-left: 20px;
+			margin-right: 20px;
+			height: 50px;
+			width: 200px;
+			color: black;
+			background: white;
+			text-align: center;
+			line-height: 50px;
+			box-shadow: 2px 2px 10px 2px gray;
+		}
 
-		/*
-		{"type":"Feature","properties":{"mag":3.08,"place":"67km ESE of Lakeview, Oregon","time":"1421133746095","updated":"1421135242586","tz":-480,"url":"http://earthquake.usgs.gov/earthquakes/eventpage/nn00476861","felt":0,"cdi":1,"mmi":null,"alert":null,"status":"reviewed","tsunami":null,"sig":"146","net":"nn","code":"00476861","ids":",nn00476861,","sources":",nn,","types":",cap,dyfi,general-link,geoserve,nearby-cities,origin,phase-data,","nst":"6","dmin":"0.133","rms":"0.1627","gap":"121.27","magnitudeType":"ml"},"geometry":{"type":"Point","coordinates":[-119.6261,41.9058,7.2603]},"id":"nn00476861"}
-		*/
+		input[type="range"]{
+			-webkit-appearance: none;
+			width: 160px;
+			height: 20px;
+			outline: none;
+			border: none;
+			box-shadow: none;
+			background: linear-gradient(to right, #3e87ec 0%, #3e87ec 100%);
+			background-size: 150px 10px;
+			background-position: center;
+			background-repeat: no-repeat;
+			overflow: hidden;
+		}
 
-		// Create a <script> tag and set the USGS URL as the source.
-		var script = document.createElement('script');
-		script.src = 'http://earthquake.usgs.gov/earthquakes/feed/geojsonp/2.5/week';
-		document.getElementsByTagName('head')[0].appendChild(script);
-	}
+		input[type="range"]::-webkit-slider-thumb {
+			-webkit-appearance: none;
+			width: 20px;
+			height: 20px;
+			background: #757575;
+			position: relative;
+			border-radius: 50%;
+			z-index: 3;
+		}
 
-	function eqfeed_callback(results) {
-		for (var i = 0; i < results.features.length; i++) {
+		input[type="range"]::-webkit-slider-thumb:after {
+			content:" ";
+			width: 150px;
+			height: 10px;
+			position: absolute;
+			z-index: 1;
+			right: 20px;
+			top: 5px;
+			background: #2963b3;
+			background: linear-gradient(to right, #2963b3 1%, #2963b3 70%);
+		}
 
-			var place = results.features[i].properties.place;
-			var coords = results.features[i].geometry.coordinates;
-			var latLng = new google.maps.LatLng(coords[1], coords[0]);
-			var magnitude = results.features[i].properties.mag;
+		#panel {
+			position: absolute;
+			top: 40%;
+			right: 10px;
+			z-index: 10;
+		}
 
-			var circle2 = {
-				path: google.maps.SymbolPath.CIRCLE,
-				fillColor: 'red',
-				fillOpacity: .2,
-				scale: Math.pow(2, magnitude) / 2,
-				strokeColor: 'white',
-				strokeWeight: .5
+		#desc {
+			text-align: left;
+		}
+	</style>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZP5OvW0UjUkT_zSvMG8-zMGDvaDGb2AQ"></script>
+	<script type="text/javascript">
+		var map;
+		// Initialisation de la Map
+		function initialize() {
+			var mapOptions = {
+				zoom: 2,
+				center: { lat: 42.0575795, lng: 8.919779},
+				mapTypeId: google.maps.MapTypeId.TERRAIN
+			};
+			map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+			// Crée un élément 'script' contenant la source de tous les
+			// tremblements de la semaine
+			var script = document.createElement('script');
+			script.src = 'http://earthquake.usgs.gov/earthquakes/feed/geojsonp/2.5/week';
+			document.getElementsByTagName('head')[0].appendChild(script);
+		}
+
+		function eqfeed_callback(results) {
+			for (var i = 0; i < results.features.length; i++) {
+				var place = results.features[i].properties.place;
+				var coords = results.features[i].geometry.coordinates;
+				var latLng = new google.maps.LatLng(coords[1], coords[0]);
+				var magnitude = results.features[i].properties.mag;
+				var range = document.getElementById('range').value;
+
+				var circle2 = {
+					path: google.maps.SymbolPath.CIRCLE,
+					fillColor: 'red',
+					fillOpacity: .2,
+					scale: Math.pow(2, magnitude) / 2,
+					strokeColor: 'white',
+					strokeWeight: .5
+				};
+				var infowindow = new google.maps.InfoWindow();
+				var marker = new google.maps.Marker({
+					position: latLng,
+					icon: circle2,
+					title: 'Magnitude : '+magnitude,
+					map: map
+				});
+				google.maps.event.addListener(marker, 'click', (function(marker, i) {
+					return function() {
+						var place = results.features[i].properties.place;
+						var magnitude = results.features[i].properties.mag;
+						infowindow.setContent(place);
+						infowindow.open(map, marker);
+
+						var pays = place.split(", ");
+
+						var caract = document.getElementById('caract');
+						caract.innerHTML = "Lieu : "+place+", de magnitude : "+magnitude;
+
+						// Supprime les vidéos et personne célèbre précédente
+						document.getElementById('youtube').remove();
+						document.getElementById('personne').remove();
+
+						// Recrée la balise div avec l'id video pour réinsérer les vidéo dedans
+						// et les personne célèbre
+						document.getElementById('video').innerHTML = '<div id="youtube"></div>';
+						document.getElementById('desc').innerHTML = '<center><div id="caract"><strong>Lieu : </strong>'+place+', avec une <strong>magnitude</strong> de : '+magnitude+'</div></center><br><div id="personne"></div>';
+						makeRequest(place);
+						freebaseRequest(pays[1]);
+					}
+				})(marker, i));
+			}
+		}
+		google.maps.event.addDomListener(window, 'load', initialize);
+
+		// Quand le javascript API client est charger, cet fonction est exécuter
+		function onClientLoad() {
+			gapi.client.load('youtube', 'v3', makeRequest);
+		}
+
+		function onClientLoad(){
+			gapi.client.setApiKey('AIzaSyCZP5OvW0UjUkT_zSvMG8-zMGDvaDGb2AQ');
+			gapi.client.load('youtube', 'v3', function() {});
+		}
+
+		function makeRequest(place) {
+			// L'API key créer pour l'application
+			gapi.client.setApiKey('AIzaSyCZP5OvW0UjUkT_zSvMG8-zMGDvaDGb2AQ');
+			// Recherche une vidéo youtube correspondant à la recherche 'q'
+			var request = gapi.client.youtube.search.list({
+				q: place,
+				part: 'snippet'
+			});
+			request.execute(function(response) {
+				if (response.items.length < 1) {
+					document.getElementById('youtube').innerHTML += "Aucune vidéo trouvé, cliquer sur un autre tremblement de Terre";
+				};
+				var responseString = JSON.stringify(response, '', 2);
+				for (var i = 0; i < 3; i++) {
+
+					// Ajoute les vidéos correspondant à la recherche 
+					document.getElementById('youtube').innerHTML += "<iframe id='ytplayer' type='text/html' width='240' height='190' src='http://www.youtube.com/embed/"+response.items[i].id.videoId+"'frameborder='0'/><br>";
+
+				};
+			});
+		}
+
+		// Recherche personnage célèbre du pays d'ou provient le tremblement
+		function freebaseRequest(pays) {
+			if (! pays || pays[1] === undefined || pays[1] === null) {
+
+				document.getElementById('personne').innerHTML += "<center>Aucun pays n'est défini, <strong>you're in the OCEAN !</strong></center>";
+				
 			};
 
-			var infowindow = new google.maps.InfoWindow();
-			var marker = new google.maps.Marker({
-				position: latLng,
-				icon: circle2,
-				title: 'Lieu : '+place+' Magnitude : '+magnitude,
-				map: map
+			// Les 10 personnes à rechercher
+			var service_url = 'https://www.googleapis.com/freebase/v1/search';
+			var params = {
+				'query': pays[1],
+				'filter': '(any type:/people/person)',
+				'limit': 10,
+				'indent': true
+			};
+			$.getJSON(service_url + '?callback=?', params, function(response) {
+				$.each(response.result, function(i, result) {
+					$('<div>', {text:result['name']}).appendTo(document.getElementById('personne'));
+
+					// La description de cette personne
+					var topic_id = result['id'];
+					var service_url = 'https://www.googleapis.com/freebase/v1/topic';
+					var params = {
+						'lang': 'fr'
+					};
+					$.getJSON(service_url + topic_id + '?callback=?', params, function(topic) {
+						console.log({text:topic.property['/common/topic/description'].values[0].value});
+						//$('<span>',{text:topic.property['/common/topic/description'].values[0].value}).appendTo(document.getElementById('personne'));
+					});
+				});
 			});
-
-			google.maps.event.addListener(marker, 'click', (function(marker, i) {
-				return function() {
-					console.log(results.features[i].properties.place);
-					infowindow.setContent(results.features[i].properties.place);
-					infowindow.open(map, marker);
-				}
-			})(marker, i));
 		}
-	}
-
-	google.maps.event.addDomListener(window, 'load', initialize);
-
-</script>
+	</script>
+	<script src="https://apis.google.com/js/client.js?onload=onClientLoad" type="text/javascript"></script>
+	</script>
 </head>
 <body>
-<div id="map"></div>
-<footer>
-<h1>Youtube Video</h1>
-<input type="range" id="range" min="0" max="10" step="0.1" value="5" onchange="rangevalue.value=value"/>
-<output id="rangevalue">5</output>
-<div id="video"></div>
-<input type="text" id="test">
-</footer>
+	<div id="map"></div>
+	<div id="panel">
+		<center><output id="rangevalue">10</output></center>
+		<input type="range" id="range" min="0" max="10" step="0.1" value="10" onchange="rangevalue.value=value"/>
+	</div>
+	<footer>
+		<div id="desc">
+			<div id="caract"></div>
+			<div id="personne"></div>
+		</div>
+		<h1>Youtube Video</h1>
+		<div id="video">
+			<div id="youtube">Cliquer sur un tremblement de Terre</div>
+		</div>
+	</footer>
 </body>
 </html>
