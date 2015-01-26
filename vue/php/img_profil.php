@@ -85,6 +85,7 @@ function supprimerImage() {
 			unlink($chemin); // On efface.
 		}
 	}
+	// Fermeture dossier
 	closedir($repertoire);
 }
 
