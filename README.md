@@ -16,9 +16,9 @@ Exemple:
 
 Ainsi dans l'arborescence /var/www/Pictionary/vue/php/ le fichier 'img_profil.php' pourra créer une image en fonction de la première lettre du prénom lors d'une inscription sans séléction d'image.
 
-**Editer les variable ci-dessous dans le fichier "/vue/php/img_profil.php" pour que la création automatique de l'image puisse fonctionner dans votre environnement.
+**Editer les variables ci-dessous dans le fichier "/vue/php/img_profil.php" pour que la création automatique de l'image puisse fonctionner dans votre environnement.
 
 ![Alt text](http://img4.hostingpics.net/pics/221093pictionary.png "Pictionary dossier")
 
 **Le dossier TP contient tous les tests réussi lors du TP facebook, création Mashup, application tremblements de Terre.
-Le fichier 'laMap.html', contient le code de l'application de tremblement de terre, les autres fichier sont des Betas de test qui sont ensuite intégrer dans les applictions.
+Le fichier 'laMap.html', contient le code de l'application de tremblement de terre, les autres fichier sont des Betas test qui sont ensuite intégrer dans les applictions.
