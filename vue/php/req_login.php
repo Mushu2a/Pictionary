@@ -5,7 +5,12 @@ if (isset($_POST) && isset($_POST["login_form"])) {
 
 	// récupérer les éléments du formulaire
 	$email = stripslashes($_POST['email']);
-	$password = stripslashes($_POST['password']);
+
+	// Générer mot de passe + mon grain de sel
+	$prefixSalt = "bgcpQNu2ILA0hVkRTSUlqvdO48M6s9jamBZWoiXe";
+	$suffixSalt = "W9hvxBZpTHTj1YnO9QAhR94tw9rLs1bIKnwENsxd";
+	$pass = stripslashes($_POST['password']);
+	$password = md5($prefixSalt.$pass.$suffixSalt);
 
 	// Si le bouton valider connexion
 	try {
