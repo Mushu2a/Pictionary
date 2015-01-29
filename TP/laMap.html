@@ -144,6 +144,7 @@
 						infowindow.open(map, marker);
 
 						var pays = place.split(", ");
+						var placement = place.split("km");
 
 						var caract = document.getElementById('caract');
 						caract.innerHTML = "Lieu : "+place+", de magnitude : "+magnitude;
@@ -156,7 +157,7 @@
 						// et les personne célèbre
 						document.getElementById('video').innerHTML = '<div id="youtube"></div>';
 						document.getElementById('desc').innerHTML = '<center><div id="caract"><strong>Lieu : </strong>'+place+', avec une <strong>magnitude</strong> de : '+magnitude+'</div></center><br><div id="personne"></div>';
-						makeRequest(place);
+						makeRequest(placement);
 						freebaseRequest(pays[1]);
 					}
 				})(marker, i));
@@ -174,12 +175,12 @@
 			gapi.client.load('youtube', 'v3', function() {});
 		}
 
-		function makeRequest(place) {
+		function makeRequest(placement) {
 			// L'API key créer pour l'application
 			gapi.client.setApiKey('AIzaSyCZP5OvW0UjUkT_zSvMG8-zMGDvaDGb2AQ');
 			// Recherche une vidéo youtube correspondant à la recherche 'q'
 			var request = gapi.client.youtube.search.list({
-				q: place,
+				q: placement[1],
 				part: 'snippet'
 			});
 			request.execute(function(response) {
